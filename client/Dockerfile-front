@@ -1,0 +1,46 @@
+FROM node:10
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
+WORKDIR /home/node/app
+
+COPY package*.json ./
+
+RUN npm install
+
+RUN npm audit fix
+
+# ENTRYPOINT /home/beatriz/Documentos/Atividades-Programacao-de-Scripts/atividade5-scripts/front/src
+
+CMD npm start
+
+COPY . .
+
+COPY --chown=node:node . .
+
+USER node
+
+EXPOSE 3000
+
+CMD [ "cd", "src" ]
+
+CMD [ "npm", "start" ]
+
+# Imagem de Origem
+# FROM node:latest
+# Diretório de trabalho(é onde a aplicação ficará dentro do container).
+# WORKDIR /front
+# Adicionando `/front/node_modules/.bin` para o $PATH
+# ENV PATH /front/node_modules/.bin:$PATH
+# /home/beatriz/Documentos/Atividades Programacao de Scripts/atividade5-scri
+# Instalando dependências da aplicação e armazenando em cache.
+# COPY package*.json .
+# RUN npm install
+# RUN npm install bootstrap -y
+# RUN npm install reactstrap -y
+# RUN npm install -g npm@7.14.0
+# Copiando front e liberando porta
+# COPY . .
+# EXPOSE 3100
+# Inicializa a aplicação
+# CMD ["npm", "start"]

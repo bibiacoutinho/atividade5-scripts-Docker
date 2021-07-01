@@ -1,0 +1,44 @@
+version: '3'
+services:
+  front:
+    image: bibiacoutinho/front
+    container_name: front
+    ports:
+      - "3100:3100"
+    networks:
+      - docker_bridge
+  servidor:
+    image: bibiacoutinho/servidor
+    container_name: servidor
+    ports:
+      - "3000:3000"
+    depends_on:
+      - front
+    networks:
+      - docker_bridge
+networks:
+  docker_bridge:
+   driver: bridge
+
+# version: '3.7'
+
+# services:
+
+#   front:
+#     container_name: front
+#     build: ./front
+#     volumes:
+#       - './:/front'
+#       - '/front/node_modules'
+#     ports:
+#       - 3100:3100
+#     stdin_open: true
+#     environment:
+#       - CHOKIDAR_USEPOLLING=true
+#     command: npm start
+
+#   servidor:
+#       container_name: servidor
+#       build: ./servidor
+#       ports:
+#         - 3000:3000

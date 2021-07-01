@@ -1,0 +1,41 @@
+FROM node:10
+
+RUN mkdir -p /home/node/webapp/node_modules && chown -R node:node /home/node/webapp
+
+WORKDIR /home/node/webapp
+
+COPY package*.json ./
+
+RUN npm install -g npm@7.15.0
+
+RUN npm i express
+
+RUN npm i cors
+
+RUN npm i sqlite3
+
+COPY . .
+
+COPY --chown=node:node . .
+
+USER node
+
+EXPOSE 3101
+
+CMD [ "node", "index.js" ]
+
+# Imagem de Origem
+# FROM node:latest
+# Diretório de trabalho(é onde a aplicação ficará dentro do container).
+# WORKDIR /servidor
+# Adicionando `/servidor/node_modules/.bin` para o $PATH
+# ENV PATH /servidor/node_modules/.bin:$PATH
+# Instalando dependências da aplicação e armazenando em cache.
+# RUN npm install -y express
+# RUN npm install -y cors
+# RUN npm install -y sqlite3
+# Copiando servidor e liberando porta
+# COPY . .
+# EXPOSE 3000
+# Inicializa a aplicação
+# CMD ["node", "index.js"]
